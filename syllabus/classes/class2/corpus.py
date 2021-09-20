@@ -2,6 +2,8 @@
 Corpus object for class 2
 '''
 import os, re
+from collections import Counter
+from math import log
 
 # Define functions
 def read_text_file(file_path):
@@ -63,20 +65,31 @@ class corpus:
             if word not in tokens:
                 out.append(None)
                 continue
-            d = {}
+            n_word = len(tokens)
+            
+            # count bigram
+            bigram_count = {}
             for i, token in enumerate(tokens):
                 if token == word:
                     if i != 0: 
                         word_before = tokens[i-1]
-                        d[word_before] = d.get(word_before, 0) + 1
-                    if i != len(tokens)-1: 
+                        bigram_count[word_before] = bigram_count.get(word_before, 0) + 1
+                    if i != n_word-1: 
                         word_after = tokens[i+1]
-                        d[word_after] = d.get(word_after, 0) + 1
+                        bigram_count[word_after] = bigram_count.get(word_after, 0) + 1
+            word_count = Counter(tokens)
+            
+            d = {}
+            for token in tokens:
+                # PMI
+                if token not in bigram_count.keys():
+                    # d[token] = 0
+                    continue
+                p_num = bigram_count[token]/n_word
+                p_den = (word_count[word]/n_word)*(word_count[token]/n_word)
+                d[token] = log(p_num/p_den)
             out.append(d)
         return out
-
-
-
 
 
 if __name__ == "__main__":
@@ -85,8 +98,8 @@ if __name__ == "__main__":
     c.seg_sentences()
     c.tokenization()
 
-    print('text = ', c.texts[0])
+    # print('text = ', c.texts[0])
     # print('sent = ', c.sent_list[0])
     # print('tokens = ', c.token_list[0])
-    print(c.PMI('wife')[0])
+    print(c.PMI('the')[0])
 
