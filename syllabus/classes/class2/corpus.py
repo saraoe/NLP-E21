@@ -37,23 +37,46 @@ class corpus:
         Segments texts into sentences
         sent_list has same length as number of texts
         '''
-        self.sent_list= list(map(lambda x: re.split('[.!]', x), self.texts))
+        def f(x):
+            return re.split('[.!]', x)
+        self.sent_list = list(map(f, self.texts))
 
     def tokenization(self) -> None:
         '''
         Tokenizes the texts
         token_list has same length as number of texts
         '''
-        self.token_list = list(map(lambda x: re.split(r'\W+', x), self.texts))
+        def f(x):
+            return re.split(r'\W+', x.lower())
+        self.token_list = list(map(f, self.texts))
     
-    def PMI(self) -> list:
+    def PMI(self, word: str) -> list:
         '''
         Calculate the pointwise mutual information (PMI or MI) for each word in the texts.
         
         Returns a list with same lenght as the number of texts. 
         The list contains dictionaries with the PMI for each word in each text
+        If the word is not in the text, None is returned
         '''
-        pass
+        out = []
+        for tokens in self.token_list:
+            if word not in tokens:
+                out.append(None)
+                continue
+            d = {}
+            for i, token in enumerate(tokens):
+                if token == word:
+                    if i != 0: 
+                        word_before = tokens[i-1]
+                        d[word_before] = d.get(word_before, 0) + 1
+                    if i != len(tokens)-1: 
+                        word_after = tokens[i+1]
+                        d[word_after] = d.get(word_after, 0) + 1
+            out.append(d)
+        return out
+
+
+
 
 
 if __name__ == "__main__":
@@ -63,6 +86,7 @@ if __name__ == "__main__":
     c.tokenization()
 
     print('text = ', c.texts[0])
-    print('sent = ', c.sent_list[0])
-    print('tokens = ', c.token_list[0])
+    # print('sent = ', c.sent_list[0])
+    # print('tokens = ', c.token_list[0])
+    print(c.PMI('wife')[0])
 
