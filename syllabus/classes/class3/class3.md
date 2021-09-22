@@ -7,6 +7,7 @@ Summary, before the class you are required to:
 - 2) have a corpus loader ready
 - 3) read the quick introduction to spacy and solve the exercise at the end.
 
+
 ### spaCy
 Before class you are required to have installed spacy. You can do this using:
 
@@ -115,5 +116,38 @@ You can combine paths using `os.path.join()`.
 ## Plan for class
 
 - 1) Talk about exercise 1
+- 2) Filter a text to keep only the lemma of nouns, adjectives and verbs
 
-... to be updated.
+
+<details>
+    <summary> Deconstruction of the task </summary>
+
+The task can meaningfully be deconstructed into a series of functions on the token level:
+- A filter function, which decided if a token should be kept.
+- A function which extract the lemma
+
+These function can then be combined and used iteratively over the tokens of a document.
+
+
+</details>
+
+<br /> 
+
+- 3) Calculate the ratio of pos-tags in texts. The ratios of pos-tags on other linguistic feature have for example been [linked](https://www.nature.com/articles/s41537-021-00154-3) to scizophrenia which e.g. use less adverbs, adjectives, and determiners (e.g., “the,” “a,”).
+
+<details>
+    <summary> Deconstruction of the task </summary>
+
+The task can meaningfully be deconstructed into a series of functions:
+- A function (or list comprehension) which takes a list of tokens (Doc) and extracts the pos tag for each
+- A function which counts these. *Hint* look up the `Counter` class.
+
+</details>
+
+<br /> 
+
+<del>4) If you get the time calculate PMI (see last weeks class) using the tokenization and sentence segmentation of spaCy.</del>
+
+- 4) Calculate the mean dependency distance (MDD) for one of the texts. The mean dependency distance can be seen as a measure of lexical complexity, where higher mean dependency distance results in higher complexity ([Liu 2008](https://pdfs.semanticscholar.org/b6b9/cf00698a76d7a1e5ba58baa92d8799366813.pdf), [Oya 2011](http://www.paaljapan.org/conference2011/ProcNewest2011/pdf/poster/P-13.pdf)). This measure have for example been linked to language comprehension difficulty by [Liu 2008](https://pdfs.semanticscholar.org/b6b9/cf00698a76d7a1e5ba58baa92d8799366813.pdf).
+
+![](MDD.png)
