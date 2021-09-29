@@ -1,5 +1,6 @@
 '''
 Preparation to class 4
+
 Functions for class:
 - Term frequency
 - Document frequency
@@ -19,7 +20,9 @@ def term_freq(tokens: list[str]) -> dict:
 def doc_freq(docs: list[list[str]]) -> dict:
     """
     Takes in a list of documents which each is a list of tokens and return a dictionary of
-    frequencies for each token over all the documents. E.g. {"Aarhus": 20, "the": 2301, ...}
+    frequencies for each token over all the documents. 
+    
+    E.g. {"Aarhus": 20, "the": 2301, ...}
     """
     d = {}
     for doc in docs:
