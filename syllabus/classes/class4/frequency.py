@@ -26,9 +26,8 @@ def doc_freq(docs: list[list[str]]) -> dict:
     """
     d = {}
     for doc in docs:
-        term_count = Counter(doc)
-        for term, count in term_count.items():
-            d[term] = d.get(term, 0) + count
+        for term in set(doc):
+            d[term] = d.get(term, 0) + 1
     return d
 
 
