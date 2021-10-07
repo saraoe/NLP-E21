@@ -26,7 +26,7 @@ class Model(nn.Module):
         super(Model, self).__init__()
         self.linear1 = nn.Linear(n_input_features, 30)
         self.linear2 = nn.Linear(30, 30)
-        self.linear3 = nn.Linear(30, 1)
+        self.linear3 = nn.Linear(30, 4)
 
     def forward(self, x):
         x = self.linear1(x)
@@ -51,7 +51,7 @@ for text in train['main_text']:
 
 v = DictVectorizer(sparse=False)
 X_numpy = v.fit_transform(tf)
-y_numpy = np.array(train['label'])
+y_numpy = np.array(train['label']) # needs to be one-hot-encoded
 
 
 X = torch.tensor(X_numpy, dtype=torch.float)
