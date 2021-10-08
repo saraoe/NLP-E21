@@ -3,7 +3,7 @@ Preparation to class 4
 
 Functions for A2:
 - Term frequency
-- Document frequency
+- Inverse document frequency
 
 Based on the definition of tf-idf in slides from lecture 4
 '''
@@ -27,27 +27,29 @@ def idf(docs: list[list[str]]) -> dict:
     
     E.g. {"Aarhus": 20, "the": 2301, ...}
     """
-    N = len(docs)
+    n = len(docs)
     d = {}
     for doc in docs:
         for term in set(doc):
             df = d.get(term, 0) + 1
-            d[term] = log10(N / df)
+            d[term] = log10(n / df)
     return d
 
 
-def tfidf(texts: list) -> list[dict]:
+def tfidf(texts: list, df: dict=None) -> list[dict]:
     """
     takes in a list of tokenized texts and returns a list of dictionaries
 
     args:
         df (dict): Document frequencies, defaults to None, in which case it is estimated from the texts.
     """
+    if not df:
+        df = idf(texts)
+    
     out = []
-    idf_ = idf(texts)
     for text in texts:
         tf_ = tf(text)
-        tmp = {term: freq*idf_[term] for term, freq in tf_.items()} 
+        tmp = {term: freq*df[term] for term, freq in tf_.items()} 
         out.append(tmp)
     return out 
 
