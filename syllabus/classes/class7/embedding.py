@@ -6,16 +6,14 @@ import numpy as np
 
 def gensim_to_torch_embedding(gensim_wv):
     """
-    - Add type hints on input and output
-    - add function description
-    - understand the pad and unk embeddings, add an argument which makes these optional. 
-        E.g. add_padding = True and add_unknown = True
+    Transforms the gensim embedding to a torch embedding
+    Also creates an embedding for unknown words and padding
     """
     embedding_size = gensim_wv.vectors.shape[1]
 
     # create unknown and padding embedding
     unk_emb = np.mean(gensim_wv.vectors, axis=0).reshape((1, embedding_size))
-    pad_emb = np.zeros((1, gensim_wv.vectors.shape[1]))
+    pad_emb = np.zeros((1, embedding_size))
 
     # add the new embedding
     embeddings = np.vstack([gensim_wv.vectors, unk_emb, pad_emb])

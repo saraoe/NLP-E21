@@ -25,16 +25,12 @@ from embedding import gensim_to_torch_embedding
 # convert gensim word embedding to torch word embedding
 embedding_layer, vocab = gensim_to_torch_embedding(model)
 
-
 # PREPARING A BATCH
 
 
-def tokens_to_idx(tokens, vocab=model.key_to_index):
+def tokens_to_idx(tokens: List[str], vocab: dict=model.key_to_index) -> List[int]:
     """
-    Ideas to understand this function:
-    - Write documentation for this function including type hints for each arguement and return statement
-    - What does the .get method do?
-    - Why lowercase?
+    Takes a list of tokens and returns a list of corresponding idxs from vocab
     """
     return [vocab.get(t.lower(), vocab["UNK"]) for t in tokens]
 
@@ -73,7 +69,7 @@ batch_input, batch_labels = torch.LongTensor(batch_input), torch.LongTensor(
 from LSTM import RNN
 
 model = RNN(
-    embedding_layer=embedding_layer, num_classes=num_classes + 1, hidden_dim_size=256
+    embedding_layer=embedding_layer, output_dim=num_classes + 1, hidden_dim_size=256
 )
 
 # FORWARD PASS
