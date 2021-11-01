@@ -1,5 +1,6 @@
 import numpy as np
 import torch
+from typing import List
 
 from datasets import load_dataset
 import gensim.downloader as api
